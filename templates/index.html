@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <!-- for mobile responsive -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- style.css -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+
+    <title>Flask - Send Mail</title>
+  </head>
+  <body class="text-center">
+    <form class="form-signin" id="form1">
+      <button class="btn btn-lg btn-primary btn-block" id="mailsend">
+        Send Mail
+      </button>
+    </form>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $("#form1 #mailsend").click(function(e) {
+          e.preventDefault();
+
+          var button = $("#form1 #mailsend");
+          var default_button_text = "Send Mail";
+          var before_send_button_text =
+            '<i class="fa fa-spinner fa-spin fa-fw"></i> Please Wait ...';
+          var after_send_button_text =
+            '<i class="fa fa-check-circle"></i> Mail Sent';
+
+          $(this)
+            .attr("disabled", true)
+            .html(before_send_button_text);
+
+          $.get("send-mail", function(res) {
+            console.log(res);
+
+            if (res == "MAIL-SENT") {
+              button.html(after_send_button_text);
+
+              setTimeout(function() {
+                button.attr("disabled", false).html(default_button_text);
+              }, 1000);
+            } else {
+              button.html.attr("disabled", false).html(default_button_text);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
