@@ -1,2 +1,5 @@
 ## How to run
-`python app.py`
+* Use command-line interface to extract text from pdf:
+
+    `python app.py`
+    
